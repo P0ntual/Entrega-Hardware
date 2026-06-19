@@ -1,7 +1,3 @@
-# Coleta de specs da maquina (Windows) - Infraestrutura de Hardware
-# Como rodar (PowerShell):
-#   powershell -ExecutionPolicy Bypass -File .\coletar_dados_windows.ps1
-# Gera o arquivo: dados_maquina_windows.txt (na mesma pasta)
 
 $out = Join-Path $PSScriptRoot "dados_maquina_windows.txt"
 "=== COLETA DE SPECS - WINDOWS ===" | Out-File $out
