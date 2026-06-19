@@ -1,6 +1,4 @@
-/* Microbenchmark de latencia de cache por pointer-chasing.
-   Mede o tempo medio por acesso (ns) variando o tamanho do conjunto de trabalho.
-   Os patamares revelam L1, L2, L3 e RAM. */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -29,18 +27,18 @@ int main(void){
         size_t *next = malloc(ne*sizeof(size_t));
         if(!perm || !next){ free(perm); free(next); continue; }
         for(size_t i=0;i<ne;i++) perm[i]=i;
-        for(size_t i=ne-1;i>0;i--){           /* embaralha (Fisher-Yates) */
+        for(size_t i=ne-1;i>0;i--){          
             size_t j = ((size_t)rand()*(size_t)rand()) % (i+1);
             size_t t=perm[i]; perm[i]=perm[j]; perm[j]=t;
         }
-        for(size_t i=0;i<ne;i++) next[perm[i]] = perm[(i+1)%ne]; /* ciclo unico */
+        for(size_t i=0;i<ne;i++) next[perm[i]] = perm[(i+1)%ne];
         free(perm);
         volatile size_t idx=0;
-        for(size_t i=0;i<ne;i++) idx = next[idx];   /* aquecimento */
+        for(size_t i=0;i<ne;i++) idx = next[idx]; 
         double t0 = now_ns();
         for(size_t i=0;i<ITERS;i++) idx = next[idx];
         double t1 = now_ns();
-        if(idx==0xdeadbeef) printf("x");            /* evita otimizacao */
+        if(idx==0xdeadbeef) printf("x");            
         printf("%zu,%.2f\n", bytes/1024, (t1-t0)/(double)ITERS);
         fflush(stdout);
         free(next);
