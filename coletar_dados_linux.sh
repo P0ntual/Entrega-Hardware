@@ -1,10 +1,4 @@
 #!/usr/bin/env bash
-# Coleta de specs + benchmarks (Linux) - Infraestrutura de Hardware
-# Pre-requisitos (Ubuntu/Debian):
-#   sudo apt install -y hwloc dmidecode sysbench fio stress-ng numactl pciutils mbw linux-tools-generic
-# Como rodar:
-#   chmod +x coletar_dados_linux.sh && ./coletar_dados_linux.sh
-# Gera: dados_maquina_linux.txt (na pasta atual)
 
 OUT="dados_maquina_linux.txt"
 exec > >(tee "$OUT") 2>&1
